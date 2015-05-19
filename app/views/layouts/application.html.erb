@@ -10,5 +10,11 @@
 
 <%= yield %>
 
+<% if session[:user_id] %>
+  <ul>
+	<li><%= link_to 'Users', users_path %></li>
+  </ul>
+  <%= button_to 'Logout', logout_path, method: :delete   %>
+<% end %>
 </body>
 </html>
