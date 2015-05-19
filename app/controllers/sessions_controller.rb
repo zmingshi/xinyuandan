@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authorize
+  #skip_before_action :authorize
   #get
   def new
   end
@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:name])
 	if user and user.authenticate(params[:password])
 	  session[:user_id] = user.id
+	  #sign_in user
 	  redirect_to user_url(:id => session[:user_id])
 	  #redirect_to user_url(user)
 	else 
