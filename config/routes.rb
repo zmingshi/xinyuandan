@@ -1,4 +1,7 @@
 Xinyuandan::Application.routes.draw do
+
+  resources :wish_items
+
   controller :sessions do
     get 'login' => :new
 	post 'login' => :create
@@ -8,6 +11,11 @@ Xinyuandan::Application.routes.draw do
   get "sessions/create"
   get "sessions/destroy"
   resources :users
+
+  resources :users do
+    resources :wish_items
+  end  
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

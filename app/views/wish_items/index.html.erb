@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @user.address %>
+</p>
+
+<% if @user.wish_items.any? %>
+  <table summary="User wish_items">
+    <%= render 'wish_item' %>
+  </table>
+<% end %>
+
+<strong>Name</strong> <%= @user.name %><br />
+<strong>URL</strong>  <%= link_to user_path(@user), @user %><br />
+<strong>Wish_items_count</strong> <%= @user.wish_items.count %> <br />
+
+<%= link_to 'Back', users_path %>

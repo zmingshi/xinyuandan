@@ -10,5 +10,8 @@
   <%= @user.address %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<strong>Wish_items</strong> <%= @user.wish_items.count %> <br/>
+<ul>
+  <li><%= link_to 'WishItems Lists',  user_wish_items_path(@user.id) %></li>
+  <li><%= link_to 'New Wish Items', new_user_wish_item_path(@user.id) %></li>
+</ul>

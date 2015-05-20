@@ -1,0 +1,36 @@
+<h1>Listing wish_items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Url</th>
+      <th>Mark</th>
+      <th>Flag</th>
+      <th>User</th>
+	  <th>Created_at</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wish_items.each do |wish_item| %>
+      <% user = wish_item.user rescue User.find(wish_item.user_id) %>
+      <tr>
+        <td><%= wish_item.title %></td>
+        <td><%= wish_item.url %></td>
+        <td><%= wish_item.mark %></td>
+        <td><%= wish_item.flag %></td>
+        <td><%= wish_item.user.name %></td>
+        <td>Posted <%= time_ago_in_words(wish_item.created_at) %> ago</td>
+        <td><%= link_to 'Show', wish_item %></td>
+		<% if current_user?(user) %>
+		  <td><%= link_to 'Edit', edit_wish_item_path(wish_item) %></td>
+          <td><%= link_to 'Destroy', wish_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<% end %>
+      </tr>
+	<% end %>
+  </tbody>
+</table>
