@@ -69,14 +69,19 @@ class FriendshipsController < ApplicationController
   def create
     @friendship = current_user.friendships.build(:friend_id => params[:friend_id])  
     respond_to do |format|
-      if @friendship.save
-	    #redirect_to action: 'index'
-        format.html { redirect_to user_friendships_url(:user_id => current_user.id) }
-        format.json { render json: @friendship }
-      else
-        format.html { render json: {:error => 'AddFriendFailed'} }
-        format.json { render json: {:error => 'AddFriendFailed'} }
-      end
+	  begin
+        if @friendship.save
+	      #redirect_to action: 'index'
+          format.html { redirect_to user_friendships_url(:user_id => current_user.id) }
+          format.json { render json: @friendship }
+        else
+          format.html { render json: {:error => 'AddFriendFailed'} }
+          format.json { render json: {:error => 'AddFriendFailed'} }
+        end
+	  rescue ActiveRecord::RecordNotUnique
+	    format.html { render json: {:error => 'AddFriendFailed'} }
+		format.html { render json: {:error => 'AddFriendFailed'} }
+	  end
     end
   end
 
