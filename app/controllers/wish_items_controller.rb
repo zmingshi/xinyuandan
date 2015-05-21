@@ -4,16 +4,23 @@ class WishItemsController < ApplicationController
 
   # GET /wish_items
   # GET /wish_items.json
-  def index
-    @user = User.find(session[:user_id])
+  def item
+    @user = User.find(params[:id])
 	@wish_items = @user.wish_items
-	@title = @user.name
 	respond_to do |format|
 	  if @wish_items
-	    format.html
+	    format.html { render action: 'index' }
 		format.json { render json: @wish_items }
 	  end
 	end
+  end
+  
+  # GET /wish_items
+  # GET /wish_items.json
+  # GET wish_items for current_user
+  def index
+    params[:id] = session[:user_id]
+    item
   end
 
   # GET /wish_items/1

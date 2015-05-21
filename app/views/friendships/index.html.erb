@@ -1,0 +1,28 @@
+<h1>Listing your friends</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Friend</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @friendships.each do |friendship| %>
+      <tr>
+        <td><%= current_user.name %></td>
+        <td><%= friendship.friend.name %></td>
+        <td><%= link_to 'Show_Items', user_items_path(:id => friendship.friend.id) %></td>
+        <td><%= link_to 'Destroy', user_friendship_path(:id => friendship.id, :user_id => friendship.friend.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Friendship', new_friendship_path %>

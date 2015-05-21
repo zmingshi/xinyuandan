@@ -23,6 +23,27 @@ class UsersController < ApplicationController
   def edit
   end
 
+  #finduser
+  def finduser
+  end
+
+  # search user
+  # POST /search
+  def search
+    @user = User.find_by_name(params[:name])
+	respond_to do |format|
+	if @user
+      #format.html { redirect_to @user }
+      format.html { render template: "users/adduser" }
+	  #format.html { render json: { :user => @user } }
+	  format.json { render json: { :user => @user } }
+	else
+      format.html { render json: { :error => "user does not exist" } }
+	  format.json { render json: { :error => "user does not exist" } }
+	end
+  end
+end
+
   # POST /users
   # POST /users.json
   def create
@@ -30,11 +51,14 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User #{@user.name} was successfully created." }
-        format.json { render action: 'show', status: :created, location: @user }
+        #format.html { redirect_to @user, notice: "User #{@user.name} was successfully created." }
+        #format.json { render action: 'show', status: :created, location: @user }
+        format.html { render json: { :wish_items => [] , :user => @user } }
+        format.json { render json: { :wish_items => [] , :user => @user } }
       else
         format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: { :error => 'SignUpFailed'} }
+        #format.json { render json: {:} }
       end
     end
   end
@@ -71,6 +95,8 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
+	  require 'json'
+	  params[:user] = JSON.parse params[:user] if params[:user].is_a?String
       params.require(:user).permit(:name, :address, :password, :password_confirmation)
     end
 end
