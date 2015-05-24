@@ -38,8 +38,8 @@ class UsersController < ApplicationController
 	  #format.html { render json: { :user => @user } }
 	  format.json { render json: { :user => @user } }
 	else
-      format.html { render json: { :error => "user does not exist" } }
-	  format.json { render json: { :error => "user does not exist" } }
+      format.html { render json: { :error => "user_does_not_exist" } }
+	  format.json { render json: { :error => "user_does_not_exist" } }
 	end
   end
 end
@@ -56,7 +56,7 @@ end
         format.html { render json: { :wish_items => [] , :user => @user } }
         format.json { render json: { :wish_items => [] , :user => @user } }
       else
-        format.html { render action: 'new' }
+        format.html { render json: { :error => 'SignUpFailed'} }
         format.json { render json: { :error => 'SignUpFailed'} }
         #format.json { render json: {:} }
       end

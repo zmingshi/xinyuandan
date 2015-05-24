@@ -24,7 +24,7 @@
         <td><%= wish_item.mark %></td>
         <td><%= wish_item.flag %></td>
         <td><%= wish_item.user.name %></td>
-        <td>Posted <%= time_ago_in_words(wish_item.created_at) %> ago</td>
+        <td>Posted <%= (wish_item.created_at) %> ago</td>
         <td><%= link_to 'Show', wish_item %></td>
 		<% if current_user?(user) %>
 		  <td><%= link_to 'Edit', edit_wish_item_path(wish_item) %></td>

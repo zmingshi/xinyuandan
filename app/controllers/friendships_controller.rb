@@ -23,6 +23,8 @@ class FriendshipsController < ApplicationController
 	  if @friendships
 	    format.html 
 		format.json { render json: @friends_list }
+	  else
+	    format.json { render json: { :error => 'GetFriendFailed' } }
 	  end
 	end
   end

@@ -1,7 +1,7 @@
 Xinyuandan::Application.routes.draw do
 
   resources :friendships
-
+  
   resources :wish_items
 
   controller :sessions do
@@ -24,6 +24,7 @@ Xinyuandan::Application.routes.draw do
   end  
   
   get 'users/:id/items' => 'wish_items#item', as: :user_items
+  get 'wish_items/:id/setflag' => 'wish_items#set_flag'
 
   resources :users do
     resources :friendships

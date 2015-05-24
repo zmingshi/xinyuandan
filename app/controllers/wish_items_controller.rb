@@ -23,6 +23,21 @@ class WishItemsController < ApplicationController
     item
   end
 
+  # POST 
+  # set flag => true
+  def set_flag
+    @wish_item = WishItem.find(params[:id])
+	respond_to do |format|
+	  if @wish_item.update_attribute(:flag, true)
+	    format.html { render json: @wish_item }
+		format.json { render json: @wish_item }
+	  else
+	    format.html { render json: {:error => 'set_flag_failed'} }
+	    format.json { render json: {:error => 'set_flag_failed'} }
+	  end
+	end
+  end
+
   # GET /wish_items/1
   # GET /wish_items/1.json
   def show
@@ -40,16 +55,18 @@ class WishItemsController < ApplicationController
   # POST /wish_items
   # POST /wish_items.json
   def create
-	@wish_item = current_user.wish_items.build(wish_item_params)
+    @user = User.find_by(:id => params[:user_id])
+	@wish_item = @user.wish_items.build(wish_item_params)
     #@wish_item = WishItem.new(wish_item_params)
 
     respond_to do |format|
       if @wish_item.save
         format.html { redirect_to @wish_item, notice: 'Wish item was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @wish_item }
+        #format.json { render json: { :wish_item => current_user.wish_items } }
+        format.json { render json: { :status => '200' } }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @wish_item.errors, status: :unprocessable_entity }
+        format.html { render json: { :params => @user, :error => 'create_item_failed' } }
+        format.json { render json: { :params => @user, :error => 'create_item_failed' } }
       end
     end
   end
@@ -90,6 +107,13 @@ class WishItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def wish_item_params
+	  require 'json'
+	  params[:wish_item] = JSON.parse params[:wish_item] if params[:wish_item].is_a?String
       params.require(:wish_item).permit(:title, :url, :mark, :flag, :user_id)
     end
+
+	def update_created_at(created_at)
+	  require ActionView::Helpers::DateHelper
+      time_ago_in_words(created_at) 
+	end
 end
