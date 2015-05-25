@@ -69,20 +69,21 @@ class FriendshipsController < ApplicationController
   # POST /friendships
   # POST /friendships.json
   def create
-    @friendship = current_user.friendships.build(:friend_id => params[:friend_id])  
-    respond_to do |format|
+    #@friendship = current_user.friendships.build(:friend_id => params[:friend_id])  
+	@friendship = Friendship.new(friendship_params)
+	respond_to do |format|
 	  begin
         if @friendship.save
 	      #redirect_to action: 'index'
-          format.html { redirect_to user_friendships_url(:user_id => current_user.id) }
+          format.html { render json: @friendship }
           format.json { render json: @friendship }
         else
           format.html { render json: {:error => 'AddFriendFailed'} }
           format.json { render json: {:error => 'AddFriendFailed'} }
         end
-	  rescue ActiveRecord::RecordNotUnique
-	    format.html { render json: {:error => 'AddFriendFailed'} }
-		format.html { render json: {:error => 'AddFriendFailed'} }
+	  rescue ActiveRecord::RecordNotUnique 
+        format.html { render json: {:info => 'AlreadyFriends'} }
+		format.json { render json: {:info => 'AlreadyFriends'} }
 	  end
     end
   end
@@ -125,6 +126,8 @@ class FriendshipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def friendship_params
+	  require 'json'
+	  params[:friendship] = JSON.parse params[:friendship] if params[:friendship].is_a?String
       params.require(:friendship).permit(:user_id, :friend_id)
     end
 end

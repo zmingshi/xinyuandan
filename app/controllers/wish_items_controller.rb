@@ -41,6 +41,12 @@ class WishItemsController < ApplicationController
   # GET /wish_items/1
   # GET /wish_items/1.json
   def show
+    if @wish_item.nil?
+	  respond_to do |format|
+	    format.html {render json: {:error => "这条心愿不存在" } }
+	    format.json {render json: {:error => "这条心愿不存在" } }
+	  end
+	end
   end
 
   # GET /wish_items/new
@@ -102,7 +108,11 @@ class WishItemsController < ApplicationController
 	end
     # Use callbacks to share common setup or constraints between actions.
     def set_wish_item
-      @wish_item = WishItem.find(params[:id])
+	  begin
+        @wish_item = WishItem.find(params[:id])
+	  rescue ActiveRecord::RecordNotFound
+	    @wish_item = nil
+	  end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
