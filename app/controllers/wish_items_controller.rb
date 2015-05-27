@@ -22,7 +22,16 @@ class WishItemsController < ApplicationController
     params[:id] = session[:user_id]
     item
   end
-
+  
+  def allindex
+    @wish_items = WishItem.all
+	respond_to do |format|
+	  if @wish_items
+	    format.html { render action: 'allindex' }
+	  end
+    end
+  end
+  
   # POST 
   # set flag => true
   def set_flag

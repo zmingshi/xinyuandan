@@ -1,3 +1,18 @@
 // Place all the styles related to the WishItems controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ #panel {
+	 font: 15px arial, sans-serif;
+	 border: 1px solid #f66;
+	 border-radius: 20px; 
+	 word-break: normal;
+	 position: absolute;
+	 left: 50%;
+	 top: 50%;
+	 transform: translate(-50%, -50%);
+  }
+
+ .item {
+    margin: 20px; 
+ }

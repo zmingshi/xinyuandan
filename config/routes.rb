@@ -22,7 +22,8 @@ Xinyuandan::Application.routes.draw do
   resources :users do
     resources :wish_items
   end  
-  
+ 
+  get 'allitems' => 'wish_items#allindex'
   get 'users/:id/items' => 'wish_items#item', as: :user_items
   get 'wish_items/:id/setflag' => 'wish_items#set_flag'
 

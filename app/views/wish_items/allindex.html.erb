@@ -1,0 +1,33 @@
+<h1>Listing items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Url</th>
+      <th>Mark</th>
+      <th>Flag</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wish_items.each do |item| %>
+      <tr>
+        <td><%= item.user.name %></td>
+        <td><%= item.title %></td>
+        <td><%= item.url %></td>
+        <td><%= item.mark %></td>
+        <td><%= item.flag %></td>
+        <td><%= link_to 'Edit', edit_wish_item_path(item) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User', new_user_path %>
